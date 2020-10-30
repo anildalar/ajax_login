@@ -1,0 +1,4 @@
+Asynchronus Javascript and XML
+
+JQuery Syntax
+$(selector).action()
