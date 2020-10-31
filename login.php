@@ -29,7 +29,12 @@
 						<button type="submit" class="btn btn-sm btn-success">Submit</button>
 					</form>
 				</div>
-			</div>				
+			</div>	
+			<?php 
+				//echo $_SERVER['HTTP_HOST'];
+				//echo $_SERVER['SERVER_NAME'];
+
+			?>
 		</div>
 		
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -49,13 +54,22 @@
 					//alert(pwd);
 					//$.ajax({name:value, name:value, ... })
 					$.ajax({
-						url:'http://localhost/anil/ajaxlogin/ajax.php',
+						url:"http://<?php echo $_SERVER['HTTP_HOST']; ?>/anil/ajaxlogin/ajax.php",
 						data:{
+							action:'login',
 							eml:email,
 							pw:pwd
 						},
 						success:function(result,status,xhr){
-							console.log('ok');
+							console.log(result);
+							if(result == 'valid'){
+								//alert('Welcome');
+								//window.load('dashboard.php');
+								window.location = "http://<?php echo $_SERVER['HTTP_HOST'] ?>/anil/ajaxlogin/dashboard.php";
+							}else{
+								alert('Invalid Credentials');
+								$('#email').focus();
+							}
 						}
 					});
 					
