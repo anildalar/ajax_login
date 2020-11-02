@@ -40,6 +40,8 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+		
 		<script>
 			//1. Check if the Page is loaded successfully
 			jQuery(function($){
@@ -62,13 +64,37 @@
 						},
 						success:function(result,status,xhr){
 							console.log(result);
-							if(result == 'valid'){
+							
+							//JSON String -> JS Object
+							
+							result = JSON.parse(result);
+							
+							console.log(result);
+							
+						
+							if(result.status == 200){
 								//alert('Welcome');
 								//window.load('dashboard.php');
 								window.location = "http://<?php echo $_SERVER['HTTP_HOST'] ?>/anil/ajaxlogin/dashboard.php";
 							}else{
-								alert('Invalid Credentials');
-								$('#email').focus();
+								//alert('Invalid Credentials');
+								swal({
+									title: result.message,
+									text: "Once deleted, you will not be able to recover this imaginary file!",
+									icon: "warning",
+									buttons: true,
+									dangerMode: true,
+								})
+								.then((willDelete) => {
+									if (willDelete) {
+										
+										$('#email').focus();
+									} else {
+										
+										//swal("Your imaginary file is safe!");
+									}
+								});
+								
 							}
 						}
 					});
